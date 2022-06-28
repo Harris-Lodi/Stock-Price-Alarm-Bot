@@ -1,6 +1,7 @@
 from notifypy import Notify
 import os
 
+# get current working directory
 cur_dir = os.getcwd()
 # print(cur_dir)
 
@@ -36,3 +37,15 @@ def notification_3():
     # notification.audio = str(cur_dir) + "/Audio/stomping-rock-four-shots.wav"
     notification.icon = str(cur_dir) + "/Icons/candlestick.png"
     notification.send()
+
+while True:
+    user_input = input("Enter the function you want to run, choose 1, 2, or 3: ")
+
+    if user_input == "1":
+        notification_1()
+    elif user_input == "2":
+        notification_2()
+    elif user_input == "3":
+        notification_3()
+    else:
+        break # breaks infinite while loop
