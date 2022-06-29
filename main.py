@@ -22,18 +22,20 @@ for ticker in tickers:
     print(web.DataReader(ticker, "yahoo").iloc[-1]['Close'])
 '''
 
-upper_limits = [200, 200, 200, 100, 400]
-lower_limits = [100, 100, 100, 70, 350]
+# get current working directory
+cur_dir = os.getcwd()
+
+upper_limits = [140, 163.1, 154.2, 77.6, 381]
+lower_limits = [139.5, 163, 154.1, 77.4, 380.9]
 
 # function to compare price:
 def Check_Price():
 
+    print("Stock check started!")
+
     # get the last close price before continuing
     last_prices = [web.DataReader(ticker, "yahoo")["Adj Close"][-1] for ticker in tickers]
     print(last_prices)
-
-    # delay for a number of seconds before continuing
-    time.sleep(45)
 
     for i in range(len(tickers)):
 
@@ -44,6 +46,8 @@ def Check_Price():
             notification.audio = str(cur_dir) + "/Audio/Chime.wav"
             notification.icon = str(cur_dir) + "/Icons/candlestick.png"
             notification.send()
+            print("Price of " + str(tickers[i]) + " is Too High, a good time to sell!")
+            time.sleep(5)
         elif last_prices[i] < lower_limits[i]:
             notification = Notify()
             notification.title = "Lower Limit Breached!"
@@ -51,10 +55,19 @@ def Check_Price():
             notification.audio = str(cur_dir) + "/Audio/Chime.wav"
             notification.icon = str(cur_dir) + "/Icons/candlestick.png"
             notification.send()
+            print("Price of " + str(tickers[i]) + " is Too Low, a good time to buy!")
+            time.sleep(5)
         else:
-            pass
-        # place another time.sleep to add a delay between the tickers
-        time.sleep(5)
+            print("No Price border was hit this tick!")
+            time.sleep(5)
+            break
+    
+    print("Restarting loop in 45 seconds!")
+    # delay for a number of seconds before continuing
+    time.sleep(45)
+
+    Check_Price()
+        
 
 # running always while true
 while True:
