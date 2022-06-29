@@ -1,5 +1,6 @@
 from notifypy import Notify
 import os
+import time
 
 # get current working directory
 cur_dir = os.getcwd()
@@ -18,7 +19,7 @@ def notification_1():
     notification = Notify()
     notification.title = "Function Numba One!"
     notification.message = "First function"
-    # notification.audio = str(cur_dir) + "/Audio/stomping-rock-four-shots.wav"
+    notification.audio = str(cur_dir) + "/Audio/Chime.wav"
     notification.icon = str(cur_dir) + "/Icons/candlestick.png"
     notification.send()
 
@@ -43,9 +44,12 @@ while True:
 
     if user_input == "1":
         notification_1()
+        time.sleep(10)
     elif user_input == "2":
         notification_2()
+        time.sleep(5)
     elif user_input == "3":
         notification_3()
+        time.sleep(1)
     else:
         break # breaks infinite while loop
