@@ -2,6 +2,7 @@ import os
 import time 
 import pandas_datareader as web
 from notifypy import Notify
+import threading
 
 # example on how to use notify
 '''
@@ -14,6 +15,8 @@ notification.send()
 '''
 
 tickers = ["AAPL", "FB", "NVDA", "AMD", "SPY"]
+
+go_On = True
 
 
 # one time load of stock prices to see what they are
@@ -85,4 +88,34 @@ def updator():
             pass
 
 
-updator()
+# updator()
+
+# daemon threaded way to have input close the function
+
+
+def thread_updator():
+
+    while go_On:
+        
+        Check_Price()
+
+
+def exit():
+
+    global go_On
+
+    exiter = input("Press 'Y' to close the app!")
+
+    if exiter.upper().strip() != 'Y':
+        exit()
+    else:
+        go_On = False
+        pass
+
+x = threading.Thread(target=thread_updator, args=())
+
+x.start()
+
+exit()
+
+x.join()
