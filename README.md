@@ -32,4 +32,15 @@ Actually notify works in a limited fashion, use only 2 second audio clips, nothi
 
 Defintely need to make a custom notification system/GUI later!
 
-Will need to mess around with this later, stocks do not update over the weekend so it's not a good time to test this now, will have to make a custom function to test notifier, then have it run on a weekday, need to do this tomorrow and Tuesday!
+********************************************************
+
+Stock scraper:
+
+Reference: https://www.youtube.com/watch?v=7sFCOunKL_Y
+
+Requirments:
+
+ - pip install beautifulsoup4
+ - pip install requests
+
+Need to now write function to convert json to SQL
