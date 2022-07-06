@@ -25,18 +25,18 @@ sub_class_details_b = 'tr'
 sub_data_type_details_b = 'td'
 sub_data_class_details_b = 'Ta(end) Fw(600) Lh(14px)'
 
-def getData(symbol):
+def getDataSummary(symbol):
 
-    url = 'https://finance.yahoo.com/quote/' + symbol +'?p=' + symbol + '&.tsrc=fin-srch'
+    url_summary = 'https://finance.yahoo.com/quote/' + symbol +'?p=' + symbol + '&.tsrc=fin-srch'
 
-    r = requests.get(url)
+    r_summary = requests.get(url_summary)
 
     # if r.status_code is 200, then you are good!
     # print(r.status_code)
     # bring back text from page
     # print(r.text)
 
-    soup = BeautifulSoup(r.text, 'html.parser')
+    summary = BeautifulSoup(r_summary.text, 'html.parser')
 
     # test soup
     # print(soup.title.text)
@@ -58,14 +58,14 @@ def getData(symbol):
 
     '''
     # price_main was found by highlighting the price bar, and finding the root common div
-    price_main = soup.find(data_type_price, {'class': data_class_price}).find_all(sub_class_data_type_price)
+    price_main = summary.find(data_type_price, {'class': data_class_price}).find_all(sub_class_data_type_price)
     price = price_main[0].text
     price_change_value = price_main[1].text 
     price_change_percent = price_main[2].text 
 
     # getting the front page data
-    details_a = soup.find(data_type_details_a, {'class': data_class_details_a}).find_all(sub_class_details_a)
-    details_b = soup.find(data_type_details_b, {'class': data_class_details_b}).find_all(sub_class_details_b)
+    details_a = summary.find(data_type_details_a, {'class': data_class_details_a}).find_all(sub_class_details_a)
+    details_b = summary.find(data_type_details_b, {'class': data_class_details_b}).find_all(sub_class_details_b)
 
     # store specific values we need from front page data
     previous_close = details_a[0].find(sub_data_type_details_a, {'class': sub_data_class_details_a}).text
@@ -99,9 +99,11 @@ def getData(symbol):
 
     return stock
 
+
+
 # add all dictionary data to a list
 for ticker in tickers:
-    stockData.append(getData(ticker))
+    stockData.append(getDataSummary(ticker))
     time.sleep(5)
     print('Getting, ', ticker)
 
