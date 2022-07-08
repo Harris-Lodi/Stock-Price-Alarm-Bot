@@ -2,13 +2,15 @@ import requests
 from bs4 import BeautifulSoup
 import time
 import json
+import pandas as pd 
+
 
 headers={'User-Agent': 'Mozilla/5.0 (X11; Linux x86_64; rv:91.0) Gecko/20100101 Firefox/91.0'}
 
 tickers = ['SPY', 'AMD', 'AAPL', 'NVDA', 'TSLA', 'INTC', 'NFLX']
 stockData = []
 
-# the following were found by inspecting the code for the price 
+# the following were found by inspecting the code for the price summary
 data_type_price = 'div'
 data_class_price = 'D(ib) Mend(20px)'
 sub_class_data_type_price = 'fin-streamer'
@@ -24,6 +26,12 @@ data_class_details_b = 'D(ib) W(1/2) Bxz(bb) Pstart(12px) Va(t) ie-7_D(i) ie-7_P
 sub_class_details_b = 'tr'
 sub_data_type_details_b = 'td'
 sub_data_class_details_b = 'Ta(end) Fw(600) Lh(14px)'
+
+# following is for statistics page
+
+q1_header = 'table'
+q1_class = 'W(100%) Bdcl(c)  M(0) Whs(n) BdEnd Bdc($seperatorColor) D(itb)'
+q1_subclass = 'th'
 
 def getDataSummary(symbol):
 
@@ -99,8 +107,25 @@ def getDataSummary(symbol):
 
     return stock
 
+def getDataProfile(symbol):
 
+    stat_table = []
 
+    url_profile = 'https://finance.yahoo.com/quote/' + symbol +'/profile?p=' + symbol 
+
+    r_profile = requests.get(url_profile)
+
+    # if r.status_code is 200, then you are good!
+    # print(r.status_code)
+    # bring back text from page
+    # print(r.text)
+
+    profile = BeautifulSoup(r_profile.text, 'html.parser')
+    table = profile.findall('table')
+    # table_rows = table.findall('tr')
+    print(table)
+
+'''
 # add all dictionary data to a list
 for ticker in tickers:
     stockData.append(getDataSummary(ticker))
@@ -115,7 +140,7 @@ with open('stockData.json', 'w') as f:
 
 print('Process Finished')
 
-
+'''
 # testing new code:
 
 '''
@@ -131,3 +156,5 @@ print(test[5].text)
 print(test[6].text)
 print(test[7].text)
 '''
+
+getDataProfile('AMD')
