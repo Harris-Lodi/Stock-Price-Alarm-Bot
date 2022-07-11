@@ -27,12 +27,6 @@ sub_class_details_b = 'tr'
 sub_data_type_details_b = 'td'
 sub_data_class_details_b = 'Ta(end) Fw(600) Lh(14px)'
 
-# following is for statistics page
-
-q1_header = 'table'
-q1_class = 'W(100%) Bdcl(c)  M(0) Whs(n) BdEnd Bdc($seperatorColor) D(itb)'
-q1_subclass = 'th'
-
 def getDataSummary(symbol):
 
     url_summary = 'https://finance.yahoo.com/quote/' + symbol +'?p=' + symbol + '&.tsrc=fin-srch'
@@ -107,24 +101,6 @@ def getDataSummary(symbol):
 
     return stock
 
-def getDataProfile(symbol):
-
-    stat_table = []
-
-    url_profile = 'https://finance.yahoo.com/quote/' + symbol +'/profile?p=' + symbol 
-
-    r_profile = requests.get(url_profile)
-
-    # if r.status_code is 200, then you are good!
-    # print(r.status_code)
-    # bring back text from page
-    # print(r.text)
-
-    profile = BeautifulSoup(r_profile.text, 'html.parser')
-    table = profile.findall('table')
-    # table_rows = table.findall('tr')
-    print(table)
-
 '''
 # add all dictionary data to a list
 for ticker in tickers:
@@ -157,4 +133,4 @@ print(test[6].text)
 print(test[7].text)
 '''
 
-getDataProfile('AMD')
+# getDataProfile('AMD')
