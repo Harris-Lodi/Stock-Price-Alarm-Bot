@@ -48,5 +48,8 @@ Need to now write function to convert json to SQL
 For the financial data, found a second site to scrape from, this new site is probably better then Yahoo Financials as it has more data and is easier to work with:
 https://stockanalysis.com/stocks/amd/
 
+Reddit Scraping tutorial:
+https://www.geeksforgeeks.org/scraping-reddit-using-python/
+
 The financial data was only for annual income, there is about 7 other pages in the financial tab alone to scrape and will thus need a new class for each one
 Selenium is recommended as a better way to scrape dynamic table data, but for now this will do!
