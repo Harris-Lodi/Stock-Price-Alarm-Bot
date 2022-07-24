@@ -27,7 +27,7 @@ comments_data = comments_list.find('ul').find_all('li')
 for comment in comments_data:
     comments_text = comment.find('div', {'class': 'Wow(bw)'}).text
     comments_header = comment.find('div', {'class': 'Fz(12px) Mend(20px) Mb(5px)'})
-    comments_time = comments_header.text
+    comments_time = comments_header.find('span', {'class': 'Fz(12px) C(varBattleship)'})
     print(comments_time)
     comments.append(comments_text)
     names.append(comments_header.text)
@@ -37,3 +37,6 @@ for comment in comments_data:
 # print(comments[1])
 # print(times[1])
 # print(names[1])
+
+# for some reason the time of the comments does not get scraped, but this can be resolved by pandas dataframe to orgnanize them, will have to keep track of comments
+# and compared them to prevent duplicates

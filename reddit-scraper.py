@@ -73,3 +73,5 @@ for comment in submission.comments.list():
 # creating a dataframe
 comments_df = pd.DataFrame(post_comments, columns=['comment'])
 print(comments_df)
+
+# so this works, but am now realizing Reddit may not be a useful site for getting this data in real time, thus this is now redundant

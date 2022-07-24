@@ -52,5 +52,7 @@ https://stockanalysis.com/stocks/amd/
 Reddit Scraping tutorial:
 https://www.geeksforgeeks.org/scraping-reddit-using-python/
 
+Always check for hidden API when web scraping by John Watson Rooney - for getting comments from web page
+
 The financial data was only for annual income, there is about 7 other pages in the financial tab alone to scrape and will thus need a new class for each one
 Selenium is recommended as a better way to scrape dynamic table data, but for now this will do!
