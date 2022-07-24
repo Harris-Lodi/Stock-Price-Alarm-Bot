@@ -42,6 +42,7 @@ Requirments:
 
  - pip install beautifulsoup4
  - pip install requests
+ - pip install selenium
 
 Need to now write function to convert json to SQL
 
