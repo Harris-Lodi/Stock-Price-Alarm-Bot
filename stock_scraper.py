@@ -101,15 +101,15 @@ def getDataSummary(symbol):
 
     return stock
 
-'''
+
 # add all dictionary data to a list
 for ticker in tickers:
     stockData.append(getDataSummary(ticker))
     time.sleep(5)
     print('Getting, ', ticker)
 
-# print(stockData)
-
+print(stockData)
+'''
 # convert list to json file
 with open('stockData.json', 'w') as f:
     json.dump(stockData, f)
