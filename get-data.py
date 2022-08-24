@@ -5,7 +5,7 @@ import pandas as pd
 import datetime
 from IPython.display import display
 
-df = pd.DataFrame(columns=['Date', 'Time', 'Price', 'Volume', 'RSI'])
+df = pd.DataFrame(columns=['Date', 'Time', 'Price', 'Volume', 'RSI', 'MACD', 'SMA', 'EMA'])
 # df = df.set_index(pd.DatetimeIndex(df['Time'].values))
 
 def get_data():
@@ -20,7 +20,7 @@ def get_data():
     price = web.DataReader('AMD', "yahoo").iloc[-1]['Close']
     volume = web.DataReader('AMD', "yahoo").iloc[-1]['Volume']
 
-    df.loc[len(df.index)] = [current_date, current_time, price, volume, 0]
+    df.loc[len(df.index)] = [current_date, current_time, price, volume, 0, 0, 0, 0]
 
     # print('The date is: ' + current_date + ', The time is: ' + current_time + ', The price is: ' + str(price) + ', The volume is: ' + str(volume))
 
@@ -56,15 +56,38 @@ def calc_RSI():
     # Calc the RSI
     RSI = 100.0 - (100.0 / (1.0 + RS))
 
-    # create a new dataframe
-    # new_df = pd.DataFrame()
-    # new_df['Adj Close Price'] = df['Price']
     df['RSI'] = RSI
+
+def calc_Macd():
+
+    # calculate the MACD and EMA indicators
+    # calcualte the short term EMA
+    shortEMA = df['Price'].ewm(span=12, adjust=False).mean()
+    # calculate the long term EMA
+    longEMA = df['Price'].ewm(span=26, adjust=False).mean()
+    # calculate the MACD line
+    MACD = shortEMA - longEMA
+    # calculate the signal line
+    signal = MACD.ewm(span=9, adjust=False).mean()
+
+    df['MACD'] = signal
+
+# create functions to calculate the SMA and EMA
+# SMA
+def SMA(period=30, column='Price'):
+    return df[column].rolling(window=period).mean()
+
+# EMA
+def EMA(period=20, column='Price'):
+    return df[column].ewm(span=period, adjust=False).mean()
 
 def store_data():
 
     get_data()
     calc_RSI()
+    calc_Macd()
+    df['SMA'] = SMA()
+    df['EMA'] = EMA()
 
     # df.loc[len(df.index)] = [get_data().current_date, get_data().current_time, get_data().price, get_data().volume, calc_RSI().RSI]
 
